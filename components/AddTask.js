@@ -1,4 +1,5 @@
 import { useState } from "react";
+import useSWR, { useSWRConfig } from "swr";
 import Button from "./Button";
 
 const AddTask = ({ action }) => {
@@ -8,14 +9,28 @@ const AddTask = ({ action }) => {
   const setReminder = (event) => {
     setTask({ ...task, reminder: event.target.checked });
   };
+
+  const { mutate } = useSWRConfig();
+
+  const postTask = async (task) => {
+    fetch("/api/tasks", {
+      method: "POST",
+      body: JSON.stringify({ task }),
+    })
+      .then((res) => res.json())
+      .then((task) => {
+        mutate("/api/tasks", (tasks) => [...tasks, task], {
+          revalidate: false,
+        });
+      });
+  };
   const addTask = (event) => {
     event.preventDefault();
     if (task.text && task.day) {
-      action(task);
+      postTask(task);
       // event.target.closest("form").reset();
     }
   };
-
   return (
     <form className="p-3 space-y-3">
       <input
