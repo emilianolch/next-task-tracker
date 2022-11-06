@@ -1,13 +1,11 @@
 import AddTask from "../components/AddTask";
 import Tasks from "../components/Tasks";
 
-const tasks = [];
-
-export default function Home() {
+export default function Home({ tasks }) {
   return (
     <>
       <AddTask />
-      <Tasks tasks={tasks} />
+      <Tasks />
     </>
   );
 }
