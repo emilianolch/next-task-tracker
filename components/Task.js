@@ -1,7 +1,7 @@
 import { FaTimes } from "react-icons/fa";
 import Toggle from "./Toggle";
 
-const Task = ({ task, actions }) => {
+const Task = ({ task }) => {
   return (
     <div
       className={`${

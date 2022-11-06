@@ -1,5 +1,6 @@
 import { useState } from "react";
-import useSWR, { useSWRConfig } from "swr";
+import { useSWRConfig } from "swr";
+import { postTask } from "../helpers/tasksHelper";
 import Button from "./Button";
 
 const AddTask = ({ action }) => {
@@ -12,25 +13,18 @@ const AddTask = ({ action }) => {
 
   const { mutate } = useSWRConfig();
 
-  const postTask = async (task) => {
-    fetch("/api/tasks", {
-      method: "POST",
-      body: JSON.stringify({ task }),
-    })
-      .then((res) => res.json())
-      .then((task) => {
-        mutate("/api/tasks", (tasks) => [...tasks, task], {
-          revalidate: false,
-        });
-      });
-  };
   const addTask = (event) => {
     event.preventDefault();
     if (task.text && task.day) {
-      postTask(task);
-      // event.target.closest("form").reset();
+      postTask(task).then((task) => {
+        mutate("/api/tasks", (tasks) => [...tasks, task], {
+          revalidate: false,
+        });
+        // event.target.closest("form").reset();
+      });
     }
   };
+
   return (
     <form className="p-3 space-y-3">
       <input
