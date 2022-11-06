@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Button from "./Button";
 
-const AddTask = ({ submitTask }) => {
+const AddTask = ({ action }) => {
   const [task, setTask] = useState({ reminder: false });
   const setText = (event) => setTask({ ...task, text: event.target.value });
   const setDay = (event) => setTask({ ...task, day: event.target.value });
@@ -11,8 +11,8 @@ const AddTask = ({ submitTask }) => {
   const addTask = (event) => {
     event.preventDefault();
     if (task.text && task.day) {
-      submitTask(task);
-      event.target.closest("form").reset();
+      action(task);
+      // event.target.closest("form").reset();
     }
   };
 

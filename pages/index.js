@@ -1,10 +1,12 @@
-import AddTask from "../components/AddTask";
 import Tasks from "../components/Tasks";
+import Head from "next/head";
 
 export default function Home({ tasks }) {
   return (
     <>
-      <AddTask />
+      <Head>
+        <title>Task Tracker</title>
+      </Head>
       <Tasks />
     </>
   );
