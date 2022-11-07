@@ -16,7 +16,6 @@ const Task = ({ task }) => {
 
   const updateTaskReminder = (task) => {
     updateTask(task._id, { reminder: !task.reminder }).then((data) => {
-      console.log(data);
       mutate(
         "/api/tasks",
         (tasks) =>
