@@ -5,3 +5,10 @@ export async function postTask(task) {
   });
   return res.json();
 }
+
+export async function deleteTask(id) {
+  const res = await fetch(`/api/tasks/${id}`, {
+    method: "DELETE",
+  });
+  return res.json();
+}

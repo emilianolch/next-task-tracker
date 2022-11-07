@@ -1,7 +1,15 @@
+import { useSWRConfig } from "swr";
+import { deleteTask } from "../helpers/tasksHelper";
 import { FaTimes } from "react-icons/fa";
 import Toggle from "./Toggle";
 
 const Task = ({ task }) => {
+  const { mutate } = useSWRConfig();
+  const remove = (id) => {
+    deleteTask(id).then((id) => {
+      console.log(id);
+    });
+  };
   return (
     <div
       className={`${
@@ -16,10 +24,7 @@ const Task = ({ task }) => {
           onToggle={() => actions.toggleReminder(task)}
         />
       </div>
-      <FaTimes
-        className="cursor-pointer"
-        onClick={() => actions.delete(task.id)}
-      />
+      <FaTimes className="cursor-pointer" onClick={() => remove(task._id)} />
     </div>
   );
 };
