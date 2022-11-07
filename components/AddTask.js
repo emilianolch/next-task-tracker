@@ -20,7 +20,7 @@ const AddTask = ({ action }) => {
         mutate("/api/tasks", (tasks) => [...tasks, task], {
           revalidate: false,
         });
-        // event.target.closest("form").reset();
+        event.target.closest("form").reset();
       });
     }
   };
