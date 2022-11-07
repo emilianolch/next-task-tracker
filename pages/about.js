@@ -4,6 +4,7 @@ const about = () => {
       <a
         href="https://github.com/emilianolch/next-task-tracker"
         target="_blank"
+        rel="noreferrer"
       >
         Find me on Github
       </a>
