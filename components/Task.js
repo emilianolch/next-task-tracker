@@ -6,10 +6,13 @@ import Toggle from "./Toggle";
 const Task = ({ task }) => {
   const { mutate } = useSWRConfig();
   const remove = (id) => {
-    deleteTask(id).then((id) => {
-      console.log(id);
+    deleteTask(id).then(() => {
+      mutate("/api/tasks", (tasks) => tasks.filter((task) => task._id != id), {
+        revalidate: false,
+      });
     });
   };
+
   return (
     <div
       className={`${
