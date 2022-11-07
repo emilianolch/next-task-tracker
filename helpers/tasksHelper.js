@@ -12,3 +12,11 @@ export async function deleteTask(id) {
   });
   return res.json();
 }
+
+export async function updateTask(id, fields) {
+  const res = await fetch(`/api/tasks/${id}`, {
+    method: "PATCH",
+    body: JSON.stringify({ fields }),
+  });
+  return res.json();
+}

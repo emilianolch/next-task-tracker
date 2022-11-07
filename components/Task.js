@@ -1,15 +1,30 @@
 import { useSWRConfig } from "swr";
-import { deleteTask } from "../helpers/tasksHelper";
+import { deleteTask, updateTask } from "../helpers/tasksHelper";
 import { FaTimes } from "react-icons/fa";
 import Toggle from "./Toggle";
 
 const Task = ({ task }) => {
   const { mutate } = useSWRConfig();
+
   const remove = (id) => {
     deleteTask(id).then(() => {
       mutate("/api/tasks", (tasks) => tasks.filter((task) => task._id != id), {
         revalidate: false,
       });
+    });
+  };
+
+  const updateTaskReminder = (task) => {
+    updateTask(task._id, { reminder: !task.reminder }).then((data) => {
+      console.log(data);
+      mutate(
+        "/api/tasks",
+        (tasks) =>
+          tasks.map((t) =>
+            t._id == task._id ? { ...t, reminder: !t.reminder } : t
+          ),
+        { revalidate: false }
+      );
     });
   };
 
@@ -24,7 +39,7 @@ const Task = ({ task }) => {
         <p className="mb-3">{task.day}</p>
         <Toggle
           checked={task.reminder}
-          onToggle={() => actions.toggleReminder(task)}
+          onToggle={() => updateTaskReminder(task)}
         />
       </div>
       <FaTimes className="cursor-pointer" onClick={() => remove(task._id)} />
